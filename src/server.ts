@@ -1,8 +1,12 @@
-import express from "express";
+import { Server } from "http";
+import app from "./app";
 
-const app = express();
 const PORT = 5000;
 
-app.listen(PORT, () => {
-  console.log("Health Care server is listening on port", PORT);
-});
+async function main() {
+  const server: Server = app.listen(PORT, () => {
+    console.log("DocConnect server is listening on port", PORT);
+  });
+}
+
+main();
