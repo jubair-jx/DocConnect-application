@@ -5,4 +5,9 @@ export const userFilterAbleField = [
   "searchTerm",
 ];
 export const userSearchAbleFields = ["name", "email"];
-export const paginationField = ["limit", "page"];
+export const paginationFilteringfield = [
+  "limit",
+  "page",
+  "sortBy",
+  "sortOrder",
+];

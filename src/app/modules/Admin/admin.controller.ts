@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import pickFilterData from "../../../shared/pick";
-import { paginationField, userFilterAbleField } from "./admin.constant";
+import {
+  paginationFilteringfield,
+  userFilterAbleField,
+} from "./admin.constant";
 import { adminServices } from "./admin.services";
 
 const getAllAdmin = async (req: Request, res: Response) => {
   const filters = pickFilterData(req.query, userFilterAbleField);
-  const options = pickFilterData(req.query, paginationField);
+  const options = pickFilterData(req.query, paginationFilteringfield);
 
   const result = await adminServices.getAllAdminFromDB(filters, options);
 
