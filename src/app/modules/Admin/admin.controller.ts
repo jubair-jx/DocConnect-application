@@ -38,8 +38,48 @@ const getSingleAdmin = async (req: Request, res: Response) => {
     });
   }
 };
+const updateAdminData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const result = await adminServices.updateDataById(id, req.body);
+
+    res.status(200).json({
+      status: true,
+      message: "Admin data has been updated successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err?.name || "Something went wrong",
+      err,
+    });
+  }
+};
+const deleteAdminData = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const result = await adminServices.deleteDataById(id);
+
+    res.status(200).json({
+      status: true,
+      message: "Admin data has been deleted successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err?.name || "Something went wrong",
+      err,
+    });
+  }
+};
 
 export const adminControllers = {
   getAllAdmin,
+  deleteAdminData,
   getSingleAdmin,
+  updateAdminData,
 };
