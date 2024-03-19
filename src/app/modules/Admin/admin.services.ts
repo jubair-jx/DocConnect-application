@@ -6,7 +6,7 @@ import { userSearchAbleFields } from "./admin.constant";
 const getAllAdminFromDB = async (params: any, options: any) => {
   const { searchTerm, ...filterData } = params;
 
-  const { limit, sortBy, sortOrder, skip } =
+  const { limit, sortBy, sortOrder, skip, page } =
     helperFunction.calculatePaginationFiltering(options);
 
   const andCondition: Prisma.AdminWhereInput[] = [];
@@ -48,9 +48,31 @@ const getAllAdminFromDB = async (params: any, options: any) => {
             createdAt: "desc",
           },
   });
+
+  const totalCount = await prisma.admin.count({
+    where: whereCondition,
+  });
+  return {
+    meta: {
+      page,
+      limit,
+      totalCount,
+    },
+
+    data: result,
+  };
+};
+
+const getSingleAdminFromDB = async (id: string) => {
+  const result = await prisma.admin.findUnique({
+    where: {
+      id,
+    },
+  });
   return result;
 };
 
 export const adminServices = {
   getAllAdminFromDB,
+  getSingleAdminFromDB,
 };

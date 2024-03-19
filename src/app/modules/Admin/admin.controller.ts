@@ -14,11 +14,32 @@ const getAllAdmin = async (req: Request, res: Response) => {
 
   res.status(200).json({
     status: true,
-    message: "Admin data has been retrievd successfully",
-    data: result,
+    message: "Admins data has been retrievd successfully",
+    meta: result.meta,
+    data: result.data,
   });
+};
+
+const getSingleAdmin = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await adminServices.getSingleAdminFromDB(id);
+
+    res.status(200).json({
+      status: true,
+      message: "Admin data has been retrievd successfully",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err?.name || "Something went wrong",
+      err,
+    });
+  }
 };
 
 export const adminControllers = {
   getAllAdmin,
+  getSingleAdmin,
 };
