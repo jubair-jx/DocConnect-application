@@ -1,7 +1,7 @@
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
-import adminRoutes from "./app/modules/Admin/admin.route";
-import userRoutes from "./app/modules/Users/user.route";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
+import router from "./routes/routes";
 
 const app: Application = express();
 //cors for browser support
@@ -16,7 +16,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //Initial main routes
-app.use("/api/v1", userRoutes);
-app.use("/api/v1", adminRoutes);
+app.use("/api/v1", router);
+//global error handler
+app.use(globalErrorHandler);
 
 export default app;

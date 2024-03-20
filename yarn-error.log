@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/bcrypt -D
+  C:\Program Files\nodejs\node.exe C:\Users\User\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add http-status
 
 PATH: 
   C:\Program Files\WindowsApps\Microsoft.PowerShell_7.4.1.0_x64__8wekyb3d8bbwe;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Dart\dart-sdk\bin;C:\WINDOWS\System32\OpenSSH\;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\.console-ninja\.bin;C:\Users\User\AppData\Roaming\.dotnet;C:\Users\User\AppData\Local\Microsoft\WindowsApps;C:\Users\User\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\User\.dotnet\tools;C:\Users\User\AppData\Roaming\npm;C:\php;C:\Users\User\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\User\AppData\Local\Programs\mongosh\;C:\Program Files\MongoDB\Server\7.0\bin;;C:\Users\User\AppData\Local\Programs\oh-my-posh\bin

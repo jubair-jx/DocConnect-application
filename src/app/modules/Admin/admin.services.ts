@@ -1,4 +1,4 @@
-import { Admin, Prisma } from "@prisma/client";
+import { Admin, Prisma, UserStatus } from "@prisma/client";
 import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import prisma from "../../../shared/prisma";
 import { userSearchAbleFields } from "./admin.constant";
@@ -32,7 +32,10 @@ const getAllAdminFromDB = async (params: any, options: any) => {
       })),
     });
   }
-
+  //filtering : if isDleted is true then hide data from DB
+  andCondition.push({
+    isDeleted: false,
+  });
   const whereCondition: Prisma.AdminWhereInput = { AND: andCondition };
 
   const result = await prisma.admin.findMany({
@@ -63,19 +66,24 @@ const getAllAdminFromDB = async (params: any, options: any) => {
   };
 };
 
-const getSingleAdminFromDB = async (id: string) => {
+const getSingleAdminFromDB = async (id: string): Promise<Admin | null> => {
   const result = await prisma.admin.findUnique({
     where: {
       id,
+      isDeleted: false,
     },
   });
   return result;
 };
 
-const updateDataById = async (id: string, data: Partial<Admin>) => {
+const updateDataById = async (
+  id: string,
+  data: Partial<Admin>
+): Promise<Admin | any> => {
   const isExistData = await prisma.admin.findUniqueOrThrow({
     where: {
       id,
+      isDeleted: false,
     },
   });
   if (!isExistData) {
@@ -90,24 +98,57 @@ const updateDataById = async (id: string, data: Partial<Admin>) => {
   });
   result;
 };
-const deleteDataById = async (id: string) => {
+const deleteDataById = async (id: string): Promise<Admin | null> => {
   const isExistData = await prisma.admin.findUniqueOrThrow({
     where: {
       id,
+      isDeleted: false,
     },
   });
   if (!isExistData) {
     throw new Error("This data is not exist");
   }
   const result = await prisma.$transaction(async (tx) => {
-    const adminTableDataDelete = await prisma.admin.delete({
+    const adminTableDataDelete = await tx.admin.delete({
       where: {
         id,
       },
     });
-    const userTableDataDelete = await prisma.user.delete({
+    await tx.user.delete({
       where: {
         email: adminTableDataDelete.email,
+      },
+    });
+    return adminTableDataDelete;
+  });
+
+  return result;
+};
+const softDeleteDataById = async (id: string): Promise<Admin | null> => {
+  const isExistData = await prisma.admin.findUniqueOrThrow({
+    where: {
+      id,
+      isDeleted: false,
+    },
+  });
+  if (!isExistData) {
+    throw new Error("This data is not exist");
+  }
+  const result = await prisma.$transaction(async (tx) => {
+    const adminTableDataDelete = await tx.admin.update({
+      where: {
+        id,
+      },
+      data: {
+        isDeleted: true,
+      },
+    });
+    await tx.user.update({
+      where: {
+        email: adminTableDataDelete.email,
+      },
+      data: {
+        status: UserStatus.DELETED,
       },
     });
     return adminTableDataDelete;
@@ -121,4 +162,5 @@ export const adminServices = {
   getSingleAdminFromDB,
   updateDataById,
   deleteDataById,
+  softDeleteDataById,
 };
