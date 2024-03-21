@@ -1,5 +1,5 @@
 import { UserRole } from "@prisma/client";
-import bcrypt from "bcrypt";
+import * as bcrypt from "bcrypt";
 import prisma from "../../../shared/prisma";
 
 const createAdminIntoDB = async (data: any) => {
