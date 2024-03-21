@@ -1,10 +1,17 @@
 import { Admin, Prisma, UserStatus } from "@prisma/client";
 import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import prisma from "../../../shared/prisma";
+import { TpaginationItems } from "../../interface/pagination.inteface";
 import { userSearchAbleFields } from "./admin.constant";
+import { TFilteringItems } from "./admin.interface";
 
-const getAllAdminFromDB = async (params: any, options: any) => {
+const getAllAdminFromDB = async (
+  params: TFilteringItems,
+  options: TpaginationItems
+) => {
   const { searchTerm, ...filterData } = params;
+
+  console.log(options);
 
   const { limit, sortBy, sortOrder, skip, page } =
     helperFunction.calculatePaginationFiltering(options);
