@@ -1,5 +1,6 @@
+import { UserStatus } from "@prisma/client";
 import * as bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import generateToken from "../../../helpers/helper.generateToken";
 import prisma from "../../../shared/prisma";
 import { TLogin } from "./auth.interface";
@@ -7,6 +8,7 @@ const loginIntoDB = async (payload: TLogin) => {
   const isExistUser = await prisma.user.findUniqueOrThrow({
     where: {
       email: payload.email,
+      status: UserStatus.ACTIVE,
     },
   });
   const isCorrectPassword: boolean = await bcrypt.compare(
@@ -37,7 +39,7 @@ const loginIntoDB = async (payload: TLogin) => {
 const refreshToken = async (token: string) => {
   let decodedData;
   try {
-    decodedData = jwt.verify(token, "abcdefasdfafsaga");
+    decodedData = jwt.verify(token, "abcdefasdfafsaga") as JwtPayload;
   } catch (err) {
     throw new Error("You are not authorized!!");
   }
@@ -45,6 +47,7 @@ const refreshToken = async (token: string) => {
   const isExistUser = await prisma.user.findUniqueOrThrow({
     where: {
       email: decodedData?.email,
+      status: UserStatus.ACTIVE,
     },
   });
 
