@@ -1,4 +1,5 @@
 import * as bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import generateToken from "../../../helpers/helper.generateToken";
 import prisma from "../../../shared/prisma";
 import { TLogin } from "./auth.interface";
@@ -33,6 +34,33 @@ const loginIntoDB = async (payload: TLogin) => {
   };
 };
 
+const refreshToken = async (token: string) => {
+  let decodedData;
+  try {
+    decodedData = jwt.verify(token, "abcdefasdfafsaga");
+  } catch (err) {
+    throw new Error("You are not authorized!!");
+  }
+
+  const isExistUser = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: decodedData?.email,
+    },
+  });
+
+  const accessToken = generateToken(
+    { email: isExistUser.email, role: isExistUser.role },
+    "abcdef",
+    "10min"
+  );
+  return {
+    accessToken,
+
+    needPasswordChange: isExistUser.needPasswordChange,
+  };
+};
+
 export const AuthServices = {
   loginIntoDB,
+  refreshToken,
 };
