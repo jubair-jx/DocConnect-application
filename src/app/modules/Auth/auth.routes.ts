@@ -17,5 +17,6 @@ AuthRoutes.post(
   auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.SUPER_ADMIN, UserRole.PATIENT),
   AuthController.forgetPassword
 );
+AuthRoutes.post("/reset-password", AuthController.resetPassword);
 
 export default AuthRoutes;
