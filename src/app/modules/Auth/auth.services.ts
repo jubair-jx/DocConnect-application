@@ -1,5 +1,6 @@
 import { UserStatus } from "@prisma/client";
 import * as bcrypt from "bcrypt";
+import config from "../../../config";
 import generateToken from "../../../helpers/helper.generateToken";
 import verifyToken from "../../../helpers/helper.verifyToken";
 import prisma from "../../../shared/prisma";
@@ -19,15 +20,15 @@ const loginIntoDB = async (payload: TLogin) => {
     throw new Error("Invalid password");
   }
   const accessToken = generateToken(
-    { email: isExistUser.email, password: isExistUser.password },
-    "abcdef",
-    "10min"
+    { email: isExistUser.email, role: isExistUser.role },
+    config.jwt.jwt_secret_key as string,
+    config.jwt.jwt_expires_in as string
   );
 
   const refreshToken = generateToken(
-    { email: isExistUser.email, password: isExistUser.password },
-    "abcdefasdfafsaga",
-    "30d"
+    { email: isExistUser.email, role: isExistUser.role },
+    config.jwt.refresh_token_key as string,
+    config.jwt.refresh_token_expires_in as string
   );
   return {
     accessToken,
@@ -39,7 +40,7 @@ const loginIntoDB = async (payload: TLogin) => {
 const refreshToken = async (token: string) => {
   let decodedData;
   try {
-    decodedData = verifyToken(token, "abcdefasdfafsaga");
+    decodedData = verifyToken(token, config.jwt.refresh_token_key as string);
   } catch (err) {
     throw new Error("You are not authorized!!");
   }
@@ -53,12 +54,11 @@ const refreshToken = async (token: string) => {
 
   const accessToken = generateToken(
     { email: isExistUser.email, role: isExistUser.role },
-    "abcdef",
-    "10min"
+    config.jwt.jwt_secret_key as string,
+    config.jwt.jwt_expires_in as string
   );
   return {
     accessToken,
-
     needPasswordChange: isExistUser.needPasswordChange,
   };
 };
