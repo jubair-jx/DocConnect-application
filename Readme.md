@@ -24,3 +24,11 @@ function outerFunction() {
 const closureExample = outerFunction();
 closureExample(); // Output: I am from the outer function
 ```
+
+## Connect with Us
+
+Stay connected with us on social media for more updates and resources:
+
+- [Facebook](https://www.facebook.com/yourpagename)
+- [YouTube](https://www.youtube.com/yourchannelname)
+- [LinkedIn](https://www.linkedin.com/in/yourprofilename)
