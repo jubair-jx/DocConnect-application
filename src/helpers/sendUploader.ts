@@ -2,6 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import multer from "multer";
 import path from "path";
+import { ICloudinaryResponse, IFile } from "../app/interface/cloud.interface";
 
 cloudinary.config({
   cloud_name: "dh0qpppfr",
@@ -20,12 +21,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const uploadToCloudinary = async (file: any) => {
+const uploadToCloudinary = async (
+  file: IFile
+): Promise<ICloudinaryResponse | undefined> => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       file.path,
-      { public_id: file.originalname },
-      (error, result) => {
+
+      (error: Error, result: ICloudinaryResponse) => {
         fs.unlinkSync(file.path);
         if (error) {
           reject(error);
@@ -35,13 +38,6 @@ const uploadToCloudinary = async (file: any) => {
       }
     );
   });
-  //   cloudinary.uploader.upload(
-  //     "P:/Next Level Web Dev/Full Stack Path-PH/PH-Healthcare/uploads/extend.png",
-  //     { public_id: "olympic_flag" },
-  //     function (error, result) {
-  //       console.log(result);
-  //     }
-  //   );
 };
 
 export const fileUploader = {

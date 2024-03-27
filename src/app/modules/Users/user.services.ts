@@ -7,7 +7,7 @@ const createAdminIntoDB = async (req: any) => {
   console.log("data", req.body);
   const file = req.file;
   if (file) {
-    const uploadToCloud: any = await fileUploader.uploadToCloudinary(file);
+    const uploadToCloud = await fileUploader.uploadToCloudinary(file);
     req.body.admin.profilePhoto = uploadToCloud?.secure_url;
     console.log(req.body);
   }
