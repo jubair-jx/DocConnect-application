@@ -2,7 +2,7 @@ import { Admin, Prisma, UserStatus } from "@prisma/client";
 import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import prisma from "../../../shared/prisma";
 import { TpaginationItems } from "../../interface/pagination.inteface";
-import { userSearchAbleFields } from "./admin.constant";
+import { adminSearchAbleFields } from "./admin.constant";
 import { TFilteringItems } from "./admin.interface";
 
 const getAllAdminFromDB = async (
@@ -20,7 +20,7 @@ const getAllAdminFromDB = async (
   //This condition for only search any items
   if (params.searchTerm) {
     andCondition.push({
-      OR: userSearchAbleFields.map((field) => ({
+      OR: adminSearchAbleFields.map((field) => ({
         [field]: {
           contains: params.searchTerm,
           mode: "insensitive",

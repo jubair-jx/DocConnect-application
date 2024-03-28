@@ -3,13 +3,13 @@ import catchAsync from "../../../shared/catchAsync";
 import pickFilterData from "../../../shared/pick";
 import sendResponse from "../../../shared/sendResponse";
 import {
+  adminFilterAbleField,
   paginationFilteringfield,
-  userFilterAbleField,
 } from "./admin.constant";
 import { adminServices } from "./admin.services";
 
 const getAllAdmin = catchAsync(async (req, res) => {
-  const filters = pickFilterData(req.query, userFilterAbleField);
+  const filters = pickFilterData(req.query, adminFilterAbleField);
   const options = pickFilterData(req.query, paginationFilteringfield);
 
   const result = await adminServices.getAllAdminFromDB(filters, options);

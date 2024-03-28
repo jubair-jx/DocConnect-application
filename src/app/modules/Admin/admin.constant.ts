@@ -1,10 +1,10 @@
-export const userFilterAbleField = [
+export const adminFilterAbleField = [
   "email",
   "name",
   "contactNumber",
   "searchTerm",
 ];
-export const userSearchAbleFields = ["name", "email"];
+export const adminSearchAbleFields = ["name", "email"];
 export const paginationFilteringfield = [
   "limit",
   "page",

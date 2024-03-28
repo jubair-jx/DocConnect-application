@@ -48,6 +48,20 @@ model Doctors {
 
   @@map("doctors")
 }
+model Patient {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  name          String
+  profilePhoto  String?
+  contactNumber String?
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user  User @relation(references: [email], fields: [email])
+  @@map("patient")
+}
 
 
 model User {
@@ -59,6 +73,7 @@ model User {
   status UserStatus @default(ACTIVE)
   admin Admin?
   doctor Doctors?
+  patient Patient?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
