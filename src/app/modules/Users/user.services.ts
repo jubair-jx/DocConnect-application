@@ -12,6 +12,7 @@ import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import { fileUploader } from "../../../helpers/sendUploader";
 import prisma from "../../../shared/prisma";
 import { IFile } from "../../interface/cloud.interface";
+import { TAuthUser } from "../../interface/common";
 import { TpaginationItems } from "../../interface/pagination.inteface";
 import { userSearchAbleFields } from "./user.constant";
 const createAdminIntoDB = async (req: Request): Promise<Admin> => {
@@ -175,7 +176,7 @@ const userStatusUpdateIntoDB = async (id: string, status: UserRole) => {
   return userStatusUpdate;
 };
 
-const getUserProfileFromDB = async (user: any) => {
+const getUserProfileFromDB = async (user: TAuthUser) => {
   const userInfo = await prisma.user.findUniqueOrThrow({
     where: {
       email: user.email,
@@ -222,7 +223,7 @@ const getUserProfileFromDB = async (user: any) => {
     ...userData,
   };
 };
-const userProfileUpdate = async (user: any, req: Request) => {
+const userProfileUpdate = async (user: TAuthUser, req: Request) => {
   const userInfo = await prisma.user.findUniqueOrThrow({
     where: {
       email: user.email,

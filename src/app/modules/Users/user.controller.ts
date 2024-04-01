@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import pickFilterData from "../../../shared/pick";
 import sendResponse from "../../../shared/sendResponse";
+import { TAuthUser } from "../../interface/common";
 import { paginationFilteringfield, userFilterAbleField } from "./user.constant";
 import { userServices } from "./user.services";
 
@@ -92,30 +93,34 @@ const updateUserStatus = catchAsync(async (req, res) => {
   });
 });
 
-const getUserProfile = catchAsync(async (req, res) => {
-  const user = req.user;
-  const result = await userServices.getUserProfileFromDB(user);
+const getUserProfile = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res) => {
+    const user = req.user;
+    const result = await userServices.getUserProfileFromDB(user as TAuthUser);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "User profile fetched successfully",
-    data: result,
-  });
-});
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "User profile fetched successfully",
+      data: result,
+    });
+  }
+);
 
-const updateUserProfile = catchAsync(async (req, res) => {
-  const user = req.user;
+const updateUserProfile = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res) => {
+    const user = req.user;
 
-  const result = await userServices.userProfileUpdate(user, req);
+    const result = await userServices.userProfileUpdate(user as TAuthUser, req);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "User profile updated successfully",
-    data: result,
-  });
-});
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "User profile updated successfully",
+      data: result,
+    });
+  }
+);
 
 export const userControllers = {
   createAdmin,
