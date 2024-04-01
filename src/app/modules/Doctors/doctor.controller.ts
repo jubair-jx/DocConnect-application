@@ -11,7 +11,7 @@ const updateDoctorProfile = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User profile updated successfully",
+    message: "Doctor profile updated successfully",
     data: result,
   });
 });
