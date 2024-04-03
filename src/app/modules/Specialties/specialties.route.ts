@@ -19,4 +19,6 @@ specialitesRoutes.post(
   }
 );
 
+specialitesRoutes.get("/", specialitesControllers.getAllFromDB);
+
 export default specialitesRoutes;

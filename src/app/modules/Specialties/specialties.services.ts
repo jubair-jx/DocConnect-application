@@ -1,3 +1,4 @@
+import { Specialties } from "@prisma/client";
 import { Request } from "express";
 import { fileUploader } from "../../../helpers/sendUploader";
 import prisma from "../../../shared/prisma";
@@ -13,7 +14,11 @@ const createSpecialitesIntoDB = async (req: Request) => {
   const createSpecialites = await prisma.specialties.create({ data: req.body });
   return createSpecialites;
 };
+const getAllFromDB = async (): Promise<Specialties[]> => {
+  return await prisma.specialties.findMany();
+};
 
 export const specialiteServices = {
   createSpecialitesIntoDB,
+  getAllFromDB,
 };
