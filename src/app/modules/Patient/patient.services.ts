@@ -87,7 +87,65 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
   return result;
 };
 
+const updatePatientIntoDB = async (id: string, payload: any) => {
+  const { patientHealthData, medicalReport, ...patientData } = payload;
+
+  const isExistPatient = await prisma.patient.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!isExistPatient) {
+    throw new Error("Patient not found");
+  }
+
+  const result = await prisma.$transaction(async (tsClient) => {
+    const updatePatientInfo = await tsClient.patient.update({
+      where: {
+        id,
+      },
+      data: patientData,
+      include: {
+        patientHealthData: true,
+        medicalReport: true,
+      },
+    });
+    //create or update patientHealthData
+    if (patientHealthData) {
+      // console.log(patientHealthData);
+
+      await tsClient.patientHealthData.upsert({
+        where: {
+          patientId: isExistPatient.id,
+        },
+        update: patientHealthData,
+        create: { ...patientHealthData, patientId: isExistPatient.id },
+      });
+    }
+
+    if (medicalReport) {
+      const createMedicalReport = await tsClient.medicalReport.create({
+        data: { ...medicalReport, patientId: isExistPatient.id },
+      });
+    }
+  });
+
+  const response = await prisma.patient.findUnique({
+    where: {
+      id: isExistPatient.id,
+    },
+    include: {
+      patientHealthData: true,
+      medicalReport: true,
+    },
+  });
+
+  return response;
+};
+
 export const patientServices = {
   getAllFromDB,
+  updatePatientIntoDB,
   getByIdFromDB,
 };
