@@ -3,7 +3,7 @@ import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import prisma from "../../../shared/prisma";
 import { TpaginationItems } from "../../interface/pagination.inteface";
 import { patientSearchableFields } from "./patient.constant";
-import { IPatientFilterRequest } from "./patient.interface";
+import { IPatientFilterRequest, IPatientUpdate } from "./patient.interface";
 
 const getAllFromDB = async (
   filters: IPatientFilterRequest,
@@ -87,7 +87,10 @@ const getByIdFromDB = async (id: string): Promise<Patient | null> => {
   return result;
 };
 
-const updatePatientIntoDB = async (id: string, payload: any) => {
+const updatePatientIntoDB = async (
+  id: string,
+  payload: Partial<IPatientUpdate>
+): Promise<Patient | null> => {
   const { patientHealthData, medicalReport, ...patientData } = payload;
 
   const isExistPatient = await prisma.patient.findUnique({
@@ -101,7 +104,8 @@ const updatePatientIntoDB = async (id: string, payload: any) => {
   }
 
   const result = await prisma.$transaction(async (tsClient) => {
-    const updatePatientInfo = await tsClient.patient.update({
+    //update patient information
+    await tsClient.patient.update({
       where: {
         id,
       },
@@ -113,8 +117,6 @@ const updatePatientIntoDB = async (id: string, payload: any) => {
     });
     //create or update patientHealthData
     if (patientHealthData) {
-      // console.log(patientHealthData);
-
       await tsClient.patientHealthData.upsert({
         where: {
           patientId: isExistPatient.id,
@@ -125,7 +127,7 @@ const updatePatientIntoDB = async (id: string, payload: any) => {
     }
 
     if (medicalReport) {
-      const createMedicalReport = await tsClient.medicalReport.create({
+      await tsClient.medicalReport.create({
         data: { ...medicalReport, patientId: isExistPatient.id },
       });
     }
