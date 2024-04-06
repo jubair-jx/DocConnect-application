@@ -96,14 +96,14 @@ const updatePatientIntoDB = async (
   const isExistPatient = await prisma.patient.findUnique({
     where: {
       id,
+      isDeleted: false,
     },
   });
 
   if (!isExistPatient) {
     throw new Error("Patient not found");
   }
-
-  const result = await prisma.$transaction(async (tsClient) => {
+  await prisma.$transaction(async (tsClient) => {
     //update patient information
     await tsClient.patient.update({
       where: {

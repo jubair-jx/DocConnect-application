@@ -8,7 +8,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  role UserRole
+  needPasswordChange Boolean @default(false)
+  status UserStatus @default(ACTIVE)
+  admin Admin?
+  doctor Doctors?
+  patient Patient?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+
+@@map("users")
+}
 model Admin {
   id String @id @default(uuid())
   name String
@@ -42,6 +57,9 @@ model Doctors {
   updatedAt DateTime @updatedAt
   user User @relation(references: [email], fields: [email])
   doctorSpecialties DoctorSpecialties[]
+  doctorSchedule DoctorSchedule[]
+
+
   @@map("doctors")
 }
 model Patient {
@@ -117,22 +135,34 @@ model DoctorSpecialties{
 
 
 
-model User {
+model Schedule{
   id String @id @default(uuid())
-  email String @unique
-  password String
-  role UserRole
-  needPasswordChange Boolean @default(false)
-  status UserStatus @default(ACTIVE)
-  admin Admin?
-  doctor Doctors?
-  patient Patient?
+  startDate DateTime
+  endDate DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
 
-@@map("users")
+  doctorSchedule DoctorSchedule[]
+
+  @@map("schedules")
 }
+model DoctorSchedule{
+doctorId String
+
+doctor Doctors @relation(fields: [doctorId], references: [id])
+
+scheduleId String
+
+schedule Schedule @relation(fields: [scheduleId], references: [id])
+
+isBooked Boolean
+appointmentId String?
+
+@@id([doctorId, scheduleId])
+ @@map("doctore-schedules")
+}
+
 
 enum UserRole {
   SUPER_ADMIN
