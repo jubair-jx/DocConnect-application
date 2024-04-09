@@ -12,7 +12,7 @@ scheduleRoutes.post(
 );
 scheduleRoutes.get(
   "/",
-
+  auth(UserRole.DOCTOR),
   SchedulesController.getAllFromDB
 );
 

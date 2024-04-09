@@ -4,3 +4,8 @@ export type TCreateSchedule = {
   startTime: string;
   endTime: string;
 };
+
+export type TFilterInput = {
+  startDate?: string | undefined;
+  endDate?: string | undefined;
+};
