@@ -10,5 +10,10 @@ scheduleRoutes.post(
   auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
   SchedulesController.createSchedule
 );
+scheduleRoutes.get(
+  "/",
+
+  SchedulesController.getAllFromDB
+);
 
 export default scheduleRoutes;

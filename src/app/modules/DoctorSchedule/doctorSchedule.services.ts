@@ -7,13 +7,20 @@ const createDoctorScheduleIntoDB = async (
   }
 ) => {
   console.log(user);
-  const isExistDoctor = await prisma.doctors.findUnique({
+  const isExistDoctor = await prisma.doctors.findUniqueOrThrow({
     where: {
       email: user.email,
     },
   });
 
-  console.log(payload);
+  const doctorSchedule = payload.scheduleIds.map((scheduleId) => ({
+    doctorId: isExistDoctor.id,
+    scheduleId,
+  }));
+  const result = await prisma.doctorSchedule.createMany({
+    data: doctorSchedule,
+  });
+  return result;
 };
 
 export const DoctorsSchedulesService = {
