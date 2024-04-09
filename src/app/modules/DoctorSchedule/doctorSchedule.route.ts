@@ -11,4 +11,10 @@ doctorScheduleRoutes.post(
   DoctorSchedulesController.createDoctorSchedule
 );
 
+doctorScheduleRoutes.get(
+  "/",
+  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.SUPER_ADMIN),
+  DoctorSchedulesController.getAllFromDB
+);
+
 export default doctorScheduleRoutes;

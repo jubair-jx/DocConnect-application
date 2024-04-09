@@ -37,7 +37,7 @@ const getAllFromDB = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Patients retrieval successfully",
+      message: "Schedules retrieval successfully",
       meta: result.meta,
       data: result.data,
     });
