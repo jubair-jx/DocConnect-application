@@ -10,11 +10,22 @@ doctorScheduleRoutes.post(
   auth(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.DOCTOR),
   DoctorSchedulesController.createDoctorSchedule
 );
-
 doctorScheduleRoutes.get(
   "/",
-  auth(UserRole.ADMIN, UserRole.DOCTOR, UserRole.SUPER_ADMIN),
+  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.DOCTOR),
   DoctorSchedulesController.getAllFromDB
 );
 
+doctorScheduleRoutes.get(
+  "/my-schedule",
+  auth(UserRole.DOCTOR),
+  DoctorSchedulesController.getMyAllFromDB
+);
+
+//TODO:Due issues
+doctorScheduleRoutes.delete(
+  "/:id",
+  auth(UserRole.DOCTOR),
+  DoctorSchedulesController.deleteFromDB
+);
 export default doctorScheduleRoutes;

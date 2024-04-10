@@ -15,5 +15,15 @@ scheduleRoutes.get(
   auth(UserRole.DOCTOR),
   SchedulesController.getAllFromDB
 );
+scheduleRoutes.get(
+  "/:id",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  SchedulesController.getByIdFromDB
+);
+scheduleRoutes.delete(
+  "/:id",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  SchedulesController.deleteFromDB
+);
 
 export default scheduleRoutes;
