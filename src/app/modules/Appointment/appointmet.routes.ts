@@ -8,7 +8,12 @@ const appointmentRoutes = Router();
 appointmentRoutes.post(
   "/",
   auth(UserRole.PATIENT),
-  appointmentControllers.createDoctorSchedule
+  appointmentControllers.createAppointment
+);
+appointmentRoutes.get(
+  "/my-appointment",
+  auth(UserRole.PATIENT, UserRole.DOCTOR),
+  appointmentControllers.getMyAppointment
 );
 
 export default appointmentRoutes;

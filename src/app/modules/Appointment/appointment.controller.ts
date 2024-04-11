@@ -1,11 +1,13 @@
 import { Request } from "express";
 import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
+import pickFilterData from "../../../shared/pick";
 import sendResponse from "../../../shared/sendResponse";
 import { TAuthUser } from "../../interface/common";
+import { appointmentFilterableFields } from "./appointment.constant";
 import { appointmentServices } from "./appointment.services";
 
-const createDoctorSchedule = catchAsync(
+const createAppointment = catchAsync(
   async (req: Request & { user?: TAuthUser }, res) => {
     const user = req.user;
     const result = await appointmentServices.createAppointmentIntoDB(
@@ -21,7 +23,33 @@ const createDoctorSchedule = catchAsync(
     });
   }
 );
+const getMyAppointment = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res) => {
+    const user = req.user;
+    const filters = pickFilterData(req.query, appointmentFilterableFields);
+
+    const options = pickFilterData(req.query, [
+      "limit",
+      "page",
+      "sortBy",
+      "sortOrder",
+    ]);
+    const result = await appointmentServices.getMyAppointmentFromDB(
+      user as TAuthUser,
+      filters,
+      options
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Appointment has been created",
+      data: result,
+    });
+  }
+);
 
 export const appointmentControllers = {
-  createDoctorSchedule,
+  createAppointment,
+  getMyAppointment,
 };
