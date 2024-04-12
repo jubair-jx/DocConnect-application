@@ -10,7 +10,7 @@ const createPayment = catchAsync(async (req: Request, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Schedules has been created",
+    message: "Payment Initiate has been created",
     data: result,
   });
 });

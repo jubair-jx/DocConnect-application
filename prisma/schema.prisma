@@ -184,7 +184,7 @@ model  Appointment{
  prescription Prescription?
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
-review Review?
+  review Review?
 }
 
 model Payment {
@@ -205,10 +205,10 @@ model Prescription {
   appointmentId String      @unique
   appointment Appointment @relation(fields: [appointmentId], references: [id])
   doctorId String
-doctor Doctors @relation(fields: [doctorId], references: [id])
+  doctor Doctors @relation(fields: [doctorId], references: [id])
 
   patientId String
-patient Patient @relation(fields: [patientId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
   instructions String
   followUpDate DateTime?
   createdAt    DateTime  @default(now())
