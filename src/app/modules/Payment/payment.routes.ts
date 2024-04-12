@@ -3,6 +3,9 @@ import { paymentControllers } from "./payment.controller";
 
 const paymentRoutes = Router();
 
-paymentRoutes.post("/init-payment", paymentControllers.createPayment);
+paymentRoutes.post(
+  "/init-payment/:appointmentId",
+  paymentControllers.createPayment
+);
 
 export default paymentRoutes;

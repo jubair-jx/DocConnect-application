@@ -5,7 +5,8 @@ import sendResponse from "../../../shared/sendResponse";
 import { paymentServices } from "./payment.services";
 
 const createPayment = catchAsync(async (req: Request, res) => {
-  const result = await paymentServices.createPaymentIntoDB(req.body);
+  const { appointmentId } = req.params;
+  const result = await paymentServices.createPaymentIntoDB(appointmentId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
