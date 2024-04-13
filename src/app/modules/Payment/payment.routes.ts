@@ -7,5 +7,6 @@ paymentRoutes.post(
   "/init-payment/:appointmentId",
   paymentControllers.createPayment
 );
+paymentRoutes.get("/ipn", paymentControllers.validatePayment);
 
 export default paymentRoutes;
