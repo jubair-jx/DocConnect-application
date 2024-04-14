@@ -1,5 +1,7 @@
-import { Prisma, UserRole } from "@prisma/client";
+import { AppointmentStatus, Prisma, UserRole } from "@prisma/client";
+import httpStatus from "http-status";
 import { v4 as uuidv4 } from "uuid";
+import ApiError from "../../../errors/ApiError";
 import { helperFunction } from "../../../helpers/helper.paginationFilter";
 import prisma from "../../../shared/prisma";
 import { TAuthUser } from "../../interface/common";
@@ -145,7 +147,41 @@ const getMyAppointmentFromDB = async (
   };
 };
 
+const updateAppointmentStatusIntoDB = async (
+  id: string,
+  status: AppointmentStatus,
+  user: TAuthUser
+) => {
+  const isAppointmentExist = await prisma.appointment.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      doctor: true,
+    },
+  });
+  if (user?.role === UserRole.DOCTOR) {
+    if (!(user?.email === isAppointmentExist.doctor.email)) {
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        "This is not your appointment boss!!!"
+      );
+    }
+  }
+
+  const result = await prisma.appointment.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+    },
+  });
+  return result;
+};
+
 export const appointmentServices = {
   createAppointmentIntoDB,
   getMyAppointmentFromDB,
+  updateAppointmentStatusIntoDB,
 };

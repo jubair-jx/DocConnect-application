@@ -49,7 +49,28 @@ const getMyAppointment = catchAsync(
   }
 );
 
+const updateAppointmentStatus = catchAsync(
+  async (req: Request & { user?: TAuthUser }, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const user = req.user;
+    const result = await appointmentServices.updateAppointmentStatusIntoDB(
+      id,
+      status,
+      user as TAuthUser
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Appointment has been updated successfully",
+      data: result,
+    });
+  }
+);
+
 export const appointmentControllers = {
   createAppointment,
   getMyAppointment,
+  updateAppointmentStatus,
 };

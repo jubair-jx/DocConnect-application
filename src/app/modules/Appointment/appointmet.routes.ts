@@ -15,5 +15,10 @@ appointmentRoutes.get(
   auth(UserRole.PATIENT, UserRole.DOCTOR),
   appointmentControllers.getMyAppointment
 );
+appointmentRoutes.patch(
+  "/status/:id",
+  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.DOCTOR),
+  appointmentControllers.updateAppointmentStatus
+);
 
 export default appointmentRoutes;
