@@ -1,4 +1,9 @@
-import { AppointmentStatus, Prisma, UserRole } from "@prisma/client";
+import {
+  AppointmentStatus,
+  PaymentStatus,
+  Prisma,
+  UserRole,
+} from "@prisma/client";
 import httpStatus from "http-status";
 import { v4 as uuidv4 } from "uuid";
 import ApiError from "../../../errors/ApiError";
@@ -180,8 +185,26 @@ const updateAppointmentStatusIntoDB = async (
   return result;
 };
 
+const cancelUnPaidAppointment = async () => {
+  const time = 2;
+  const thirtyMinAgo = new Date(Date.now() - time * 60 * 1000);
+  const unPaidAppoinment = await prisma.appointment.findMany({
+    where: {
+      createdAt: {
+        lte: thirtyMinAgo,
+      },
+      paymentStatus: PaymentStatus.UNPAID,
+    },
+  });
+  const appointmentIdToCancel = unPaidAppoinment.map(
+    (appoinment) => appoinment.id
+  );
+  console.log(appointmentIdToCancel);
+};
+
 export const appointmentServices = {
   createAppointmentIntoDB,
   getMyAppointmentFromDB,
   updateAppointmentStatusIntoDB,
+  cancelUnPaidAppointment,
 };
