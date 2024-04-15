@@ -132,7 +132,7 @@ const getAllFromDB = async (
     orderBy:
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
-        : { createdAt: "desc" },
+        : { avagereRating: "desc" },
     include: {
       doctorSpecialties: {
         include: {

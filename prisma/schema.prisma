@@ -51,7 +51,7 @@ model Doctors {
   qualification String
   currentWorkingPlace String
   designation String
-  avagereRating String
+  avagereRating Float @default(0.0)
   isDeleted Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
