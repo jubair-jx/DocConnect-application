@@ -16,7 +16,7 @@ const getAllMetaDataBasedOnRole = async (user: TAuthUser) => {
       getDoctorMetaData(user);
       break;
     case UserRole.PATIENT:
-      getPatientMetaData();
+      getPatientMetaData(user);
       break;
     default:
       throw new ApiError(httpStatus.BAD_REQUEST, "Invalid role");
@@ -80,7 +80,52 @@ const getDoctorMetaData = async (user: TAuthUser) => {
 
   console.log(formattedStatusMapped, { depth: "infinity" });
 };
-const getPatientMetaData = async () => {};
+const getPatientMetaData = async (user: TAuthUser) => {
+  const patientData = await prisma.patient.findUniqueOrThrow({
+    where: {
+      email: user.email,
+    },
+  });
+  const appointmentCount = await prisma.appointment.count({
+    where: {
+      patientId: patientData.id,
+    },
+  });
+  const patientCount = await prisma.appointment.groupBy({
+    by: ["patientId"],
+    _count: {
+      id: true,
+    },
+  });
+  const reviewCount = await prisma.review.count({
+    where: {
+      patientId: patientData.id,
+    },
+  });
+  const prescriptionCount = await prisma.prescription.count({
+    where: {
+      patientId: patientData.id,
+    },
+  });
+
+  const appointmentDistribution = await prisma.appointment.groupBy({
+    by: ["status"],
+    _count: {
+      id: true,
+    },
+    where: {
+      patientId: patientData.id,
+    },
+  });
+  const formattedStatusMapped = appointmentDistribution.map(
+    ({ status, _count }) => ({
+      status,
+      count: Number(_count.id),
+    })
+  );
+
+  console.log(formattedStatusMapped, { depth: "infinity" });
+};
 
 export const MetaServices = {
   getAllMetaDataBasedOnRole,
