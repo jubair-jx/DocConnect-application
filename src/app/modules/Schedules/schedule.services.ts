@@ -5,6 +5,12 @@ import prisma from "../../../shared/prisma";
 import { TAuthUser } from "../../interface/common";
 import { TpaginationItems } from "../../interface/pagination.inteface";
 import { TCreateSchedule, TFilterInput } from "./schedule.interface";
+
+const convertDateTime = async (date: Date) => {
+  const offset = date.getTimezoneOffset() * 6000;
+  return new Date(date.getTime() + offset);
+};
+
 const createScheduleIntoDB = async (
   payload: TCreateSchedule
 ): Promise<Schedule[]> => {
@@ -40,9 +46,21 @@ const createScheduleIntoDB = async (
     );
 
     while (startDateTime < endDateTime) {
+      //This is local time zone
+      // const scheduleData = {
+      //   startDateTime: startDateTime,
+      //   endDateTime: addMinutes(startDateTime, interverlTime),
+      // };
+
+      //This is for UTC Timezone
+      const startTimeWithDate = await convertDateTime(startDateTime);
+      const endDateWithTime = await convertDateTime(
+        addMinutes(startDateTime, interverlTime)
+      );
+
       const scheduleData = {
-        startDateTime: startDateTime,
-        endDateTime: addMinutes(startDateTime, interverlTime),
+        startDateTime: startTimeWithDate,
+        endDateTime: endDateWithTime,
       };
       const isExitSchedule = await prisma.schedule.findFirst({
         where: {
