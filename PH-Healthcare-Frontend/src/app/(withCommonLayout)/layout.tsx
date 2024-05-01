@@ -6,7 +6,7 @@ const CommonLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      {children}
+      <div className=" min-h-screen">{children}</div>
       <Footer />
     </>
   );
