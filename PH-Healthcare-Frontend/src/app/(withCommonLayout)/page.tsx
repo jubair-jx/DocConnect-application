@@ -1,10 +1,9 @@
-import { Button } from "@mui/material";
+import { HeroSection } from "@/components/ui/HomePage/HeroSection";
 
 export default function HomePage() {
   return (
     <>
-      <h1> This is Main Page</h1>
-      <Button variant="contained">Contained</Button>
+      <HeroSection />
     </>
   );
 }
