@@ -17,7 +17,7 @@ doctorRoutes.get("/:id", doctorControllers.getByIdFromDB);
 //task 5
 doctorRoutes.delete(
   "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   doctorControllers.deleteFromDB
 );
 // task 6
