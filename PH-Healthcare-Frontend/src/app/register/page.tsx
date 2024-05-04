@@ -2,7 +2,32 @@ import assets from "@/assets";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+type Inputs = {
+  name: string;
+  email: string;
+  password: string;
+  contactNumber: string;
+  address: string;
+};
+interface IPatientData {
+  name: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+}
+interface IPatientRegisterFormData {
+  password: string;
+  patient: IPatientData;
+}
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   return (
     <Container>
       <Stack
