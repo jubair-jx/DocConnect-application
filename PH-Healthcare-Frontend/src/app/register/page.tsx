@@ -44,7 +44,7 @@ const RegisterPage = () => {
   } = useForm<IPatientRegisterFormData>();
   const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
     const data = modifyPayload(values);
-    console.log(data);
+
     try {
       const res = await registerPatient(data);
       if (res?.data?.id) {
