@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Toaster } from "sonner";
 import "./globals.css";
 import Providers from "./lib/Providers/Providers";
 
@@ -21,7 +22,11 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          <>
+            {" "}
+            <Toaster />
+            <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          </>
         </body>
       </html>
     </Providers>

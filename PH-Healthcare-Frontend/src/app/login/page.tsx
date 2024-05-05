@@ -1,9 +1,37 @@
+"use client";
 import assets from "@/assets";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+export type TFormValues = {
+  email: string;
+  password: string;
+};
 const LoginPage = () => {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TFormValues>();
+  const onSubmit: SubmitHandler<TFormValues> = async (values) => {
+    // console.log(values);
+    try {
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
   return (
     <Container>
       <Stack
@@ -56,51 +84,48 @@ const LoginPage = () => {
           {/* )} */}
 
           <Box>
-            {/* <PHForm
-          onSubmit={handleLogin}
-          resolver={zodResolver(validationSchema)}
-          defaultValues={{
-            email: "",
-            password: "",
-          }}
-        > */}
-            <Grid container spacing={2} my={1}>
-              <Grid item md={6}>
-                {/* <PHInput
-                name="email"
-                label="Email"
-                type="email"
-                fullWidth={true}
-              /> */}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2} my={1}>
+                <Grid item md={6}>
+                  <TextField
+                    label="Email"
+                    type="email"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("email")}
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    label="Password"
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("password")}
+                  />
+                </Grid>
               </Grid>
-              <Grid item md={6}>
-                {/* <PHInput
-                name="password"
-                label="Password"
-                type="password"
+
+              <Typography mb={1} textAlign="end" component="p" fontWeight={300}>
+                Forgot Password?
+              </Typography>
+
+              <Button
+                sx={{
+                  margin: "10px 0px",
+                }}
                 fullWidth={true}
-              /> */}
-              </Grid>
-            </Grid>
-
-            <Typography mb={1} textAlign="end" component="p" fontWeight={300}>
-              Forgot Password?
-            </Typography>
-
-            <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={true}
-              type="submit"
-            >
-              Login
-            </Button>
-            <Typography component="p" fontWeight={300}>
-              Don&apos;t have an account?{" "}
-              <Link href="/register">Create an account</Link>
-            </Typography>
-            {/* </PHForm> */}
+                type="submit"
+              >
+                Login
+              </Button>
+              <Typography component="p" fontWeight={300}>
+                Don&apos;t have an account?{" "}
+                <Link href="/register">Create an account</Link>
+              </Typography>
+            </form>
           </Box>
         </Box>
       </Stack>
