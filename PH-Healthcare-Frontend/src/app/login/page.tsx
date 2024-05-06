@@ -4,16 +4,24 @@ import PHFrom from "@/components/Form/PHFrom";
 import PHInput from "@/components/Form/PHInput";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth-service";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 export type TFormValues = {
   email: string;
   password: string;
 };
+
+const loginValidationSchema = z.object({
+  email: z.string().email("Please enter your email"),
+  password: z.string().min(6, "Please enter your password"),
+});
+
 const LoginPage = () => {
   const router = useRouter();
 
@@ -82,7 +90,10 @@ const LoginPage = () => {
           {/* )} */}
 
           <Box>
-            <PHFrom onSubmit={handleLogin}>
+            <PHFrom
+              onSubmit={handleLogin}
+              resolver={zodResolver(loginValidationSchema)}
+            >
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput
