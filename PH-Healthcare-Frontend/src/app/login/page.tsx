@@ -86,6 +86,7 @@ const LoginPage = () => {
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <PHInput
+                    required={true}
                     label="Email"
                     type="email"
                     size="small"
@@ -95,6 +96,7 @@ const LoginPage = () => {
                 </Grid>
                 <Grid item md={6}>
                   <PHInput
+                    required={true}
                     label="Password"
                     type="password"
                     size="small"
