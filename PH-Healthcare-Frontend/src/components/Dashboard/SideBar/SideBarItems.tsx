@@ -1,25 +1,40 @@
 import { TDrawerItem } from "@/types";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 type TProps = {
   item: TDrawerItem;
   index: number;
 };
 
 const SideBarItems = ({ item, index }: TProps) => {
+  const linkPathName = `/dashboard/${item.path}`;
+  const pathName = usePathname();
+
   return (
-    <ListItem key={index} disablePadding>
-      <ListItemButton>
-        <ListItemIcon>
-          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-        </ListItemIcon>
-        <ListItemText primary={item.title} />
-      </ListItemButton>
-    </ListItem>
+    <Link href={linkPathName}>
+      <ListItem
+        sx={{
+          ...(pathName === linkPathName
+            ? {
+                borderRight: "4px solid #10439F",
+                "& svg": {
+                  color: "#10439F",
+                },
+              }
+            : {}),
+        }}
+        disablePadding
+      >
+        <ListItemButton>
+          <ListItemIcon>{item.icon && <item.icon />}</ListItemIcon>
+          <ListItemText primary={item.title} />
+        </ListItemButton>
+      </ListItem>
+    </Link>
   );
 };
 
