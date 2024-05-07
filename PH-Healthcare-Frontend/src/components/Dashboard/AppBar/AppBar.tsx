@@ -40,7 +40,7 @@ function AppTopBar({ drawerWidth }: { drawerWidth: number }) {
         </IconButton>
         <Box>
           <Typography variant="body2" noWrap component="div" color="gray">
-            Hi, Tanmoy Parvez
+            Hi, Mohammad Jubair
           </Typography>
           <Typography
             variant="body2"
@@ -48,7 +48,7 @@ function AppTopBar({ drawerWidth }: { drawerWidth: number }) {
             component="div"
             color="primary.main"
           >
-            Welcome To, PH Health Care !
+            Welcome To, DocConnect !
           </Typography>
         </Box>
       </Toolbar>
