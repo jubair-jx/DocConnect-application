@@ -1,44 +1,12 @@
 import assets from "@/assets";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { UserRole } from "@/types";
+import { GenerateDrawerItems } from "@/utils/DrawerItems";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Image from "next/image";
 import Link from "next/link";
+import SideBarItems from "./SideBarItems";
 function SideBar() {
-  const drawer = (
-    <div>
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
   return (
     <Box>
       <Stack
@@ -63,7 +31,12 @@ function SideBar() {
         </Typography>
       </Stack>
       <Divider />
-      {drawer}
+      <List>
+        {GenerateDrawerItems("doctor" as UserRole).map((item, index) => (
+          <SideBarItems key={index} item={item} index={index} />
+        ))}
+      </List>
+      <Divider />
     </Box>
   );
 }
