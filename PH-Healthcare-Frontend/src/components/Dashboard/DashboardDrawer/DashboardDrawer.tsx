@@ -27,18 +27,12 @@ export default function DashbaordDrawer({
     setIsClosing(false);
   };
 
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
-
   // Remove this const when copying and pasting into your project.
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppTopBar />
+      <AppTopBar drawerWidth={drawerWidth} />
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
