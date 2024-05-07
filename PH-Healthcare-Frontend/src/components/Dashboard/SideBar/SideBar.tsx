@@ -32,7 +32,7 @@ function SideBar() {
       </Stack>
       <Divider />
       <List>
-        {GenerateDrawerItems("doctor" as UserRole).map((item, index) => (
+        {GenerateDrawerItems("admin" as UserRole).map((item, index) => (
           <SideBarItems key={index} item={item} index={index} />
         ))}
       </List>

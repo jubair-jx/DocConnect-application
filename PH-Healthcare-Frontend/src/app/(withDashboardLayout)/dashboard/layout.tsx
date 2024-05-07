@@ -1,9 +1,14 @@
-import DashbaordDrawer from "@/components/Dashboard/DashboardDrawer/DashboardDrawer";
+import dynamic from "next/dynamic";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <DashbaordDrawer>{children}</DashbaordDrawer>;
+  const DashboardComponent = dynamic(
+    () => import("@/components/Dashboard/DashboardDrawer/DashboardDrawer"),
+    { ssr: false }
+  );
+
+  return <DashboardComponent>{children}</DashboardComponent>;
 }
