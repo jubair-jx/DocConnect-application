@@ -2,10 +2,12 @@ import RUFileUploader from "@/components/Form/FileUploader/RUFileUploader";
 import PHForm from "@/components/Form/PHFrom";
 import PHInput from "@/components/Form/PHInput";
 import RUModal from "@/components/shared/Modal/RUModal";
+import { useCreateSpecialtyMutation } from "@/redux/api/specialtiesApi";
 import { modifyPayload } from "@/utils/FormDataPayload";
 import { Grid } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 type TProps = {
   open: boolean;
@@ -13,9 +15,17 @@ type TProps = {
 };
 
 const SchedulesModal = ({ open, setOpen }: TProps) => {
-  const handleFormSubmit = (values: FieldValues) => {
+  const [createSpecialty] = useCreateSpecialtyMutation();
+  console.log(createSpecialty);
+  const handleFormSubmit = async (values: FieldValues) => {
     const data = modifyPayload(values);
     try {
+      const res = await createSpecialty(data).unwrap();
+
+      if (res?.id) {
+        toast.success(res?.message);
+        setOpen(false);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
