@@ -12,7 +12,7 @@ type TFormProps = {
   children: React.ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
 } & TFormConfig;
-function PHFrom({ children, onSubmit, resolver, defaultValues }: TFormProps) {
+function PHForm({ children, onSubmit, resolver, defaultValues }: TFormProps) {
   const formConfig: TFormConfig = {};
   if (resolver) {
     formConfig["resolver"] = resolver;
@@ -32,4 +32,4 @@ function PHFrom({ children, onSubmit, resolver, defaultValues }: TFormProps) {
   );
 }
 
-export default PHFrom;
+export default PHForm;

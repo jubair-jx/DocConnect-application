@@ -1,6 +1,6 @@
 "use client";
 import assets from "@/assets";
-import PHFrom from "@/components/Form/PHFrom";
+import PHForm from "@/components/Form/PHFrom";
 import PHInput from "@/components/Form/PHInput";
 import { registerPatient } from "@/services/actions/registerPatient";
 import { userLogin } from "@/services/actions/userLogin";
@@ -90,7 +90,7 @@ const RegisterPage = () => {
           </Stack>
 
           <Box>
-            <PHFrom
+            <PHForm
               defaultValues={{
                 password: "",
                 patient: {
@@ -166,7 +166,7 @@ const RegisterPage = () => {
                 </p>{" "}
                 <Link href="/login">Login</Link>
               </Typography>
-            </PHFrom>
+            </PHForm>
           </Box>
         </Box>
       </Stack>

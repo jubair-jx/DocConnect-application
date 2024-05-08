@@ -1,6 +1,6 @@
 "use client";
 import assets from "@/assets";
-import PHFrom from "@/components/Form/PHFrom";
+import PHForm from "@/components/Form/PHFrom";
 import PHInput from "@/components/Form/PHInput";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth-service";
@@ -94,7 +94,7 @@ const LoginPage = () => {
           )}
 
           <Box>
-            <PHFrom
+            <PHForm
               defaultValues={{ email: "", password: "" }}
               onSubmit={handleLogin}
               resolver={zodResolver(loginValidationSchema)}
@@ -137,7 +137,7 @@ const LoginPage = () => {
                 Don&apos;t have an account?{" "}
                 <Link href="/register">Create an account</Link>
               </Typography>
-            </PHFrom>
+            </PHForm>
           </Box>
         </Box>
       </Stack>
