@@ -18,3 +18,19 @@ export interface TDrawerItem {
 }
 
 export type UserRole = keyof typeof USER_ROLE;
+
+export type ResponseSuccessType = {
+  data: any;
+  meta?: TMeta;
+};
+
+export type IGenericErrorResponse = {
+  statusCode: number;
+  message: string;
+  errorMessages: IGenericErrorMessage[];
+};
+
+export type IGenericErrorMessage = {
+  path: string | number;
+  message: string;
+};

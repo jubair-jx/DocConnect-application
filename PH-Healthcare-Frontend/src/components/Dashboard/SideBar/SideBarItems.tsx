@@ -7,10 +7,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 type TProps = {
   item: TDrawerItem;
-  index: number;
 };
 
-const SideBarItems = ({ item, index }: TProps) => {
+const SideBarItems = ({ item }: TProps) => {
   const linkPathName = `/dashboard/${item.path}`;
   const pathName = usePathname();
 
