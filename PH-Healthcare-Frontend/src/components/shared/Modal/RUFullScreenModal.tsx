@@ -1,23 +1,12 @@
-"use client";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, SxProps } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import { DialogContent, DialogTitle, SxProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
 import * as React from "react";
+import { BootstrapDialog } from "./RUModal";
 
-export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
-
-type TProps = {
+type TModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
@@ -25,13 +14,22 @@ type TProps = {
   sx?: SxProps;
 };
 
-export default function RUModal({
-  open,
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function RUFullScreenModal({
+  open = false,
   setOpen,
-  title,
+  title = "",
   children,
   sx,
-}: TProps) {
+}: TModalProps) {
   const handleClose = () => {
     setOpen(false);
   };
@@ -39,9 +37,12 @@ export default function RUModal({
   return (
     <React.Fragment>
       <BootstrapDialog
+        fullScreen
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        sx={{ ...sx }}
+        TransitionComponent={Transition}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           {title}
@@ -58,9 +59,7 @@ export default function RUModal({
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          <Box>{children}</Box>
-        </DialogContent>
+        <DialogContent>{children}</DialogContent>
       </BootstrapDialog>
     </React.Fragment>
   );
