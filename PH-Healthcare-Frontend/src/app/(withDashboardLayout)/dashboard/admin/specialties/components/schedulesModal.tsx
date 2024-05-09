@@ -16,7 +16,7 @@ type TProps = {
 
 const SchedulesModal = ({ open, setOpen }: TProps) => {
   const [createSpecialty] = useCreateSpecialtyMutation();
-  console.log(createSpecialty);
+
   const handleFormSubmit = async (values: FieldValues) => {
     const data = modifyPayload(values);
     try {
