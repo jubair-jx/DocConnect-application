@@ -1,5 +1,7 @@
+import { UserRole } from "@prisma/client";
 import { NextFunction, Request, Response, Router } from "express";
 import { fileUploader } from "../../../helpers/sendUploader";
+import auth from "../../middlewares/auth";
 import { specialitesValidation } from "./specialites.validation";
 import { specialitesControllers } from "./specialties.controller";
 
@@ -7,7 +9,7 @@ const specialitesRoutes = Router();
 
 specialitesRoutes.post(
   "/",
-  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = specialitesValidation.createSpecialitesValidation.parse(
@@ -18,5 +20,10 @@ specialitesRoutes.post(
 );
 
 specialitesRoutes.get("/", specialitesControllers.getAllFromDB);
+specialitesRoutes.delete(
+  "/:id",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  specialitesControllers.deleteSpecialty
+);
 
 export default specialitesRoutes;
