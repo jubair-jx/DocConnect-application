@@ -1,5 +1,6 @@
 "use client";
 import { useGetAllDoctorsQuery } from "@/redux/api/doctorsApi";
+import { useDebounce } from "@/redux/hooks";
 import { Box, IconButton, Skeleton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -8,7 +9,10 @@ import DoctorModal from "./components/DoctorModal";
 const DoctorsPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const query: Record<string, any> = {};
-  query["searchTerm"] = searchTerm;
+  const debounce = useDebounce({ searchQuery: searchTerm, delay: 700 });
+  if (!!debounce) {
+    query["searchTerm"] = searchTerm;
+  }
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
   const doctors = data?.doctors;
   const meta = data?.meta;
