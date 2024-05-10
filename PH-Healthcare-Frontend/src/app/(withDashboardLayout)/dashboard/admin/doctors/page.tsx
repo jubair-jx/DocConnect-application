@@ -1,9 +1,13 @@
 "use client";
-import { useGetAllDoctorsQuery } from "@/redux/api/doctorsApi";
+import {
+  useDeleteDoctorMutation,
+  useGetAllDoctorsQuery,
+} from "@/redux/api/doctorsApi";
 import { useDebounce } from "@/redux/hooks";
 import { Box, IconButton, Skeleton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import { useState } from "react";
+import { toast } from "sonner";
 import DoctorModal from "./components/DoctorModal";
 
 const DoctorsPage = () => {
@@ -13,12 +17,19 @@ const DoctorsPage = () => {
   if (!!debounce) {
     query["searchTerm"] = searchTerm;
   }
+  const [deleteDoctor] = useDeleteDoctorMutation();
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
   const doctors = data?.doctors;
   const meta = data?.meta;
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     try {
-    } catch (err) {}
+      const res = await deleteDoctor(id).unwrap();
+      if (res?.id) {
+        toast.warning("Doctor has been deleted now!!!");
+      }
+    } catch (err) {
+      toast.error("Doctor not deleted now!!!");
+    }
   };
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const columns: GridColDef[] = [
