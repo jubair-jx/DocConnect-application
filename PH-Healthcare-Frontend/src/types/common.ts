@@ -36,3 +36,8 @@ export type IGenericErrorMessage = {
 };
 
 export const Gender = ["MALE", "FEMALE"];
+export type IMeta = {
+  page: number;
+  limit: number;
+  total: number;
+};
