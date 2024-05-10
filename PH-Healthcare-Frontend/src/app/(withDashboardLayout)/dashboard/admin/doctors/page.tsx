@@ -6,6 +6,12 @@ import { useState } from "react";
 import DoctorModal from "./components/DoctorModal";
 
 const DoctorsPage = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const query: Record<string, any> = {};
+  query["searchTerm"] = searchTerm;
+  const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
+  const doctors = data?.doctors;
+  const meta = data?.meta;
   const handleDelete = (id: string) => {
     try {
     } catch (err) {}
@@ -32,9 +38,7 @@ const DoctorsPage = () => {
       },
     },
   ];
-  const { data, isLoading } = useGetAllDoctorsQuery({});
-  const doctors = data?.doctors;
-  const meta = data?.meta;
+
   return (
     <Box>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -46,16 +50,14 @@ const DoctorsPage = () => {
         </button>
         <DoctorModal open={isModalOpen} setOpen={setIsModalOpen} />
         <TextField
-          // onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
           size="small"
           placeholder="search doctors"
         />
       </Stack>
 
       <Box>
-        <h1 className="text-lg font-semibold mt-4 mb-4">
-          Display All Doctors
-        </h1>
+        <h1 className="text-lg font-semibold mt-4 mb-4">Display All Doctors</h1>
         {!isLoading ? (
           <DataGrid rows={doctors} columns={columns} />
         ) : (
