@@ -11,7 +11,6 @@ type TProps = {
 function ScheduleModel({ open, setOpen }: TProps) {
   const handleFormSubmit = async (values: FieldValues) => {
     try {
-      console.log(values);
     } catch (err: any) {
       console.error(err);
     }
@@ -19,9 +18,12 @@ function ScheduleModel({ open, setOpen }: TProps) {
   return (
     <RUModal open={open} setOpen={setOpen} title="Create Schedule">
       <PHForm onSubmit={handleFormSubmit}>
-        <Grid container spacing={2} sx={{ width: "400px" }}>
-          <Grid item md={12}>
+        <Grid container spacing={2}>
+          <Grid item md={6}>
             <RUDateFicker name="startDate" label="Start Date" />
+          </Grid>
+          <Grid item md={6}>
+            <RUDateFicker name="endDate" label="End Date" />
           </Grid>
         </Grid>
         <Button type="submit" sx={{ mt: 1 }}>
