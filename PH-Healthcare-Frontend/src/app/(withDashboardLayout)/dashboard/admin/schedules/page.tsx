@@ -7,7 +7,9 @@ const SchedulesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   return (
     <Box>
-      <Button onClick={() => setIsModalOpen(true)}>Create Schedule</Button>
+      <Button variant="contained" onClick={() => setIsModalOpen(true)}>
+        Create Schedule
+      </Button>
       <ScheduleModel open={isModalOpen} setOpen={setIsModalOpen} />
       {/* {!isLoading ? (
      <Box my={2}>

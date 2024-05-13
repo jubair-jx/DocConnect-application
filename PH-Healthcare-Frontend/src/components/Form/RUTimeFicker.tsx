@@ -15,7 +15,7 @@ interface ITimePicker {
   sx?: SxProps;
 }
 
-const PHTimePicker = ({
+const RUTimePicker = ({
   name,
   label,
   size = "small",
@@ -63,4 +63,4 @@ const PHTimePicker = ({
   );
 };
 
-export default PHTimePicker;
+export default RUTimePicker;
