@@ -14,7 +14,7 @@ type TProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const SchedulesModal = ({ open, setOpen }: TProps) => {
+const SpecialitiesModal = ({ open, setOpen }: TProps) => {
   const [createSpecialty] = useCreateSpecialtyMutation();
 
   const handleFormSubmit = async (values: FieldValues) => {
@@ -54,4 +54,4 @@ const SchedulesModal = ({ open, setOpen }: TProps) => {
   );
 };
 
-export default SchedulesModal;
+export default SpecialitiesModal;

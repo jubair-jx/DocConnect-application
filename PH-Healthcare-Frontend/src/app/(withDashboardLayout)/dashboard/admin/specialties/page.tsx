@@ -3,7 +3,7 @@ import { useGetAllSpecialtyQuery } from "@/redux/api/specialtiesApi";
 import { Box, Skeleton, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import DataTable from "./components/DataTable";
-import SchedulesModal from "./components/schedulesModal";
+import SpecialitiesModal from "./components/specialitiesModel";
 
 const SpecialtiesPage = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const SpecialtiesPage = () => {
         >
           Create Specialty
         </button>
-        <SchedulesModal open={open} setOpen={setOpen} />
+        <SpecialitiesModal open={open} setOpen={setOpen} />
         {/* <SpecialtyModal open={isModalOpen} setOpen={setIsModalOpen} /> */}
         <TextField size="small" placeholder="Search Specialist" />
       </Stack>
