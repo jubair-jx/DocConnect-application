@@ -2,25 +2,35 @@ import RUDateFicker from "@/components/Form/DateFicker";
 import PHForm from "@/components/Form/PHFrom";
 import RUTimePicker from "@/components/Form/RUTimeFicker";
 import RUModal from "@/components/shared/Modal/RUModal";
+import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
 import dateFormatter from "@/utils/DateFormatter";
 import timeFormatter from "@/utils/TimeFormatter";
 import { Button, Grid } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 type TProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 function ScheduleModel({ open, setOpen }: TProps) {
+  const [createSchedule] = useCreateScheduleMutation();
+
   const handleFormSubmit = async (values: FieldValues) => {
     values.startDate = dateFormatter(values.startDate);
     values.endDate = dateFormatter(values.endDate);
     values.startTime = timeFormatter(values.startTime);
     values.endTime = timeFormatter(values.endTime);
-    console.log(values);
+
     try {
+      const res = await createSchedule(values).unwrap();
+
+      if (res?.length) {
+        toast.success("Schedule created successfully");
+        setOpen(false);
+      }
     } catch (err: any) {
-      console.error(err);
+      toast.error("Schedule creation failed");
     }
   };
   return (
