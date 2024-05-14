@@ -8,7 +8,7 @@ import { appointmentServices } from "./app/modules/Appointment/appointment.servi
 import router from "./routes/routes";
 const app: Application = express();
 //cors for browser support
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 //parser
 app.use(express.json());

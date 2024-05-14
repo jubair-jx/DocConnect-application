@@ -72,7 +72,7 @@ const LoginPage = () => {
             </Box>
             <Box>
               <Typography variant="h6" fontWeight={600}>
-                Login PH HealthCare
+                Login DocConnect
               </Typography>
             </Box>
           </Stack>
@@ -130,6 +130,7 @@ const LoginPage = () => {
                 }}
                 fullWidth={true}
                 type="submit"
+                variant="contained"
               >
                 Login
               </Button>
