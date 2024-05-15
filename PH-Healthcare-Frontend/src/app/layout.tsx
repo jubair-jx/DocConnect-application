@@ -24,7 +24,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <>
             {" "}
-            <Toaster />
+            <Toaster  position="top-right"/>
             <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
           </>
         </body>

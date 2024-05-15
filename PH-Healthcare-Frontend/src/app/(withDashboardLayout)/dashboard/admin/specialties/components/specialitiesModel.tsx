@@ -23,7 +23,7 @@ const SpecialitiesModal = ({ open, setOpen }: TProps) => {
       const res = await createSpecialty(data).unwrap();
 
       if (res?.id) {
-        toast.success(res?.message);
+        toast.success("Specialites has been created");
         setOpen(false);
       }
     } catch (err: any) {
