@@ -45,9 +45,11 @@ axiosInstance.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     const config = error?.config;
-    if (error?.response?.status === 500) {
+    if (error?.response?.status === 500 && !config.sent) {
+      config.sent = true;
       const response = await getNewAccessToken();
       const accessToken = response?.data?.accessToken;
+      config.headers["Authorization"] = accessToken;
       setLocalStorage(authKey, accessToken);
       return axiosInstance(config);
     } else {
