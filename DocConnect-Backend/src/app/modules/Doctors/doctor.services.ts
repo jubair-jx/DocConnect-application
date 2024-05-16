@@ -7,7 +7,6 @@ import { IDoctorFilterRequest } from "./doctor.inteface";
 
 const updateDoctorInfo = async (id: string, payload: any) => {
   const { specialties, ...doctorData } = payload;
-
   const isExistDoctor = await prisma.doctors.findUniqueOrThrow({
     where: {
       id,
@@ -26,7 +25,7 @@ const updateDoctorInfo = async (id: string, payload: any) => {
     });
 
     if (specialties && specialties.length > 0) {
-      const deletedSpecialtieIds = specialties.filter(
+      const deletedSpecialtieIds = specialties?.filter(
         (specialtie: any) => specialtie.isDeleted
       );
       console.log(deletedSpecialtieIds);
@@ -42,17 +41,19 @@ const updateDoctorInfo = async (id: string, payload: any) => {
     }
 
     //create specialties
-    const createSpecialtiesInfo = specialties.filter(
+    const createSpecialtiesInfo = specialties?.filter(
       (specialtie: any) => !specialtie.isDeleted
     );
 
-    for (const specialty of createSpecialtiesInfo) {
-      await tsClient.doctorSpecialties.create({
-        data: {
-          doctorId: isExistDoctor.id,
-          specialitiesId: specialty.specialtiesId,
-        },
-      });
+    if (createSpecialtiesInfo) {
+      for (const specialty of createSpecialtiesInfo) {
+        await tsClient.doctorSpecialties.create({
+          data: {
+            doctorId: isExistDoctor.id,
+            specialitiesId: specialty.specialtiesId,
+          },
+        });
+      }
     }
   });
   const result = await prisma.doctors.findUnique({
