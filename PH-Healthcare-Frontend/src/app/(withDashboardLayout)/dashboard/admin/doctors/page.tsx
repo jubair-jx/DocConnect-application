@@ -4,12 +4,13 @@ import {
   useGetAllDoctorsQuery,
 } from "@/redux/api/doctorsApi";
 import { useDebounce } from "@/redux/hooks";
+import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Skeleton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import DoctorModal from "./components/DoctorModal";
-
 const DoctorsPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const query: Record<string, any> = {};
@@ -46,9 +47,19 @@ const DoctorsPage = () => {
       flex: 1,
       renderCell: ({ row }) => {
         return (
-          <IconButton onClick={() => handleDelete(row.id)} aria-label="delete">
-            <GridDeleteIcon />
-          </IconButton>
+          <>
+            <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </Link>
+            <IconButton
+              onClick={() => handleDelete(row.id)}
+              aria-label="delete"
+            >
+              <GridDeleteIcon />
+            </IconButton>
+          </>
         );
       },
     },
