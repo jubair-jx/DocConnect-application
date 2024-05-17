@@ -25,7 +25,7 @@ doctorScheduleRoutes.get(
 //TODO:Due issues
 doctorScheduleRoutes.delete(
   "/:id",
-  auth(UserRole.DOCTOR),
+  // auth(UserRole.DOCTOR),
   DoctorSchedulesController.deleteFromDB
 );
 export default doctorScheduleRoutes;

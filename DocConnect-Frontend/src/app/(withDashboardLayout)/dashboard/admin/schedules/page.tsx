@@ -1,20 +1,35 @@
 "use client";
-import { useGetAllSchedulesQuery } from "@/redux/api/scheduleApi";
+import {
+  useDeleteScheduleMutation,
+  useGetAllSchedulesQuery,
+} from "@/redux/api/scheduleApi";
 import dateFormatter from "@/utils/DateFormatter";
 import { Box, Button, IconButton } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import ScheduleModel from "./components/ScheduleModel";
 
 const SchedulesPage = () => {
   const { data, isLoading } = useGetAllSchedulesQuery({});
+  const [deleteSchedule] = useDeleteScheduleMutation();
   const [allSchedule, setAllSchedule] = useState<any>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const schedules = data?.schedules;
 
   const meta = data?.meta;
-  // console.log(schedules);
+  const handleDeleteSchedules = async (id: string) => {
+    console.log(id);
+    try {
+      const res = await deleteSchedule(id).unwrap();
+      if (res?.id) {
+        toast.success("Schedule deleted successfully");
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const updateData = schedules?.map((schedule: any, index: number) => {
@@ -43,7 +58,10 @@ const SchedulesPage = () => {
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <IconButton aria-label="delete">
+          <IconButton
+            onClick={() => handleDeleteSchedules(row.id)}
+            aria-label="delete"
+          >
             <GridDeleteIcon sx={{ color: "red" }} />
           </IconButton>
         );
@@ -55,6 +73,9 @@ const SchedulesPage = () => {
       <Button variant="contained" onClick={() => setIsModalOpen(true)}>
         Create Schedule
       </Button>
+      <h1 className="text-lg font-semibold">
+        Total Schedules : {schedules?.length}
+      </h1>
       <ScheduleModel open={isModalOpen} setOpen={setIsModalOpen} />
       {!isLoading ? (
         <Box my={2}>

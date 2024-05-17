@@ -15,7 +15,7 @@ type TReturnOption = {
 
 const calculatePaginationFiltering = (option: TOption): TReturnOption => {
   const page: number = Number(option.page) || 1;
-  const limit: number = Number(option.limit) || 5;
+  const limit: number = Number(option.limit) || 10;
   const skip: number = (Number(page) - 1) * Number(limit);
 
   const sortBy: string = option.sortBy || "createdAt";
