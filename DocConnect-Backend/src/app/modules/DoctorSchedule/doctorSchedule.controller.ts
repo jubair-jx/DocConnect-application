@@ -75,6 +75,7 @@ const deleteFromDB = catchAsync(
 );
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pickFilterData(req.query, scheduleFilterableFields);
+  // console.log("filters", filters);
   const options = pickFilterData(req.query, [
     "limit",
     "page",

@@ -37,7 +37,7 @@ const getAllMyScheduleFromDB = async (
   const { limit, page, skip } =
     helperFunction.calculatePaginationFiltering(options);
   const { startDate, endDate, ...filterData } = filters;
-  console.log(filterData);
+  console.log({ startDate, endDate });
 
   const andConditions = [];
 
@@ -151,7 +151,8 @@ const getAllFromDB = async (
 ) => {
   const { limit, page, skip } =
     helperFunction.calculatePaginationFiltering(options);
-  const { searchTerm, ...filterData } = filters;
+  const { searchTerm, startDate, endDate, ...filterData } = filters;
+  console.log(filterData);
   const andConditions = [];
 
   if (searchTerm) {
@@ -183,6 +184,23 @@ const getAllFromDB = async (
           equals: (filterData as any)[key],
         },
       })),
+    });
+  }
+
+  if (startDate && endDate) {
+    andConditions.push({
+      AND: [
+        {
+          schedule: {
+            startDateTime: startDate,
+          },
+        },
+        {
+          schedule: {
+            endDateTime: endDate,
+          },
+        },
+      ],
     });
   }
 

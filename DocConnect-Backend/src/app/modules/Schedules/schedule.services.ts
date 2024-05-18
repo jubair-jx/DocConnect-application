@@ -7,7 +7,7 @@ import { TpaginationItems } from "../../interface/pagination.inteface";
 import { TCreateSchedule, TFilterInput } from "./schedule.interface";
 
 const convertDateTime = async (date: Date) => {
-  const offset = date.getTimezoneOffset() * 6000;
+  const offset = date.getTimezoneOffset() * 60000;
   return new Date(date.getTime() + offset);
 };
 

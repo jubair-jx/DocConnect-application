@@ -3,7 +3,9 @@ import {
   useDeleteScheduleMutation,
   useGetAllSchedulesQuery,
 } from "@/redux/api/scheduleApi";
-import dateFormatter from "@/utils/DateFormatter";
+import { ISchedule } from "@/types/schedule";
+
+import { dateFormatter } from "@/utils/DateFormatter";
 import { Box, Button, IconButton } from "@mui/material";
 import { DataGrid, GridColDef, GridDeleteIcon } from "@mui/x-data-grid";
 import dayjs from "dayjs";
@@ -20,7 +22,6 @@ const SchedulesPage = () => {
 
   const meta = data?.meta;
   const handleDeleteSchedules = async (id: string) => {
-    console.log(id);
     try {
       const res = await deleteSchedule(id).unwrap();
       if (res?.id) {
@@ -30,20 +31,22 @@ const SchedulesPage = () => {
       console.error(err);
     }
   };
-
   useEffect(() => {
-    const updateData = schedules?.map((schedule: any, index: number) => {
+    const updateData = schedules?.map((schedule: ISchedule, index: number) => {
+      console.log(schedule);
       return {
         sl: index + 1,
         id: schedule?.id,
         startDate: dateFormatter(schedule.startDateTime),
         endDate: dateFormatter(schedule.endDateTime),
-        startTime: dayjs(schedule?.startDate).format("hh:mm a"),
-        endTime: dayjs(schedule?.endDate).format("hh:mm a"),
+        startTime: dayjs(schedule?.startDateTime).format("hh:mm a"),
+        endTime: dayjs(schedule?.endDateTime).format("hh:mm a"),
       };
     });
     setAllSchedule(updateData);
   }, [schedules]);
+
+  console.log(allSchedule);
   const columns: GridColDef[] = [
     { field: "sl", headerName: "SL" },
     { field: "startDate", headerName: "Start Date", flex: 1 },

@@ -3,8 +3,9 @@ import PHForm from "@/components/Form/PHFrom";
 import RUTimePicker from "@/components/Form/RUTimeFicker";
 import RUModal from "@/components/shared/Modal/RUModal";
 import { useCreateScheduleMutation } from "@/redux/api/scheduleApi";
-import dateFormatter from "@/utils/DateFormatter";
-import timeFormatter from "@/utils/TimeFormatter";
+import { dateFormatter } from "@/utils/DateFormatter";
+import { timeFormatter } from "@/utils/TimeFormatter";
+
 import { Button, Grid } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";
@@ -21,7 +22,6 @@ function ScheduleModel({ open, setOpen }: TProps) {
     values.endDate = dateFormatter(values.endDate);
     values.startTime = timeFormatter(values.startTime);
     values.endTime = timeFormatter(values.endTime);
-
     try {
       const res = await createSchedule(values).unwrap();
 

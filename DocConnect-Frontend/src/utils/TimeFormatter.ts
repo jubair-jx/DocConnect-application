@@ -1,4 +1,4 @@
-function timeFormatter(time: string) {
+export const timeFormatter = (time: string) => {
   const date = new Date(time);
 
   const hours = String(date.getHours()).padStart(2, "0");
@@ -6,6 +6,4 @@ function timeFormatter(time: string) {
 
   const formattedTime = `${hours}:${minutes}`;
   return formattedTime;
-}
-// Output: "12:30"
-export default timeFormatter;
+};

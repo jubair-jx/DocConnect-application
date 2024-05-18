@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.16",
+    "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.16",
     "@mui/material-nextjs": "^5.15.11",
     "@mui/x-data-grid": "^7.3.2",
