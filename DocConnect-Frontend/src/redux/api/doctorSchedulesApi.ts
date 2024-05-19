@@ -28,10 +28,27 @@ const doctorSchedulesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.doctorSchedule],
     }),
+    getDoctorSchedules: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: "/doctor-schedule/my-schedule",
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: [], meta: IMeta) => {
+        return {
+          doctorSchedules: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.doctorSchedule],
+    }),
   }),
 });
 
 export const {
   useGetAllDoctorSchedulesQuery,
   useCreateDoctorScheduleMutation,
+  useGetDoctorSchedulesQuery,
 } = doctorSchedulesApi;

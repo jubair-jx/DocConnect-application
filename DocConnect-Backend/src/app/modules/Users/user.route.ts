@@ -49,13 +49,13 @@ userRoutes.put(
 );
 userRoutes.get(
   "/userProfile",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.PATIENT),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.PATIENT, UserRole.DOCTOR),
   userControllers.getUserProfile
 );
 
 userRoutes.patch(
   "/update-user-profile",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.PATIENT),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.PATIENT, UserRole.DOCTOR),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);

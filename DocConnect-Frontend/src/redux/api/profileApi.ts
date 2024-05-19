@@ -15,7 +15,7 @@ export const profileAPi = baseApi.injectEndpoints({
     updateMYProfile: build.mutation({
       query: (data) => {
         return {
-          url: "/user/update-my-profile",
+          url: "/users/update-user-profile",
           method: "PATCH",
           data,
           contentType: "multipart/form-data",

@@ -1,16 +1,24 @@
 import { USER_ROLE } from "@/constant/role";
 import { TDrawerItem, UserRole } from "@/types";
-import AddCardIcon from '@mui/icons-material/AddCard';
+import AddCardIcon from "@mui/icons-material/AddCard";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
-import MedicationIcon from '@mui/icons-material/Medication';
+import MedicationIcon from "@mui/icons-material/Medication";
+import Person2Icon from "@mui/icons-material/Person2";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 export const GenerateDrawerItems = (role: UserRole): TDrawerItem[] => {
   const roleMenus: TDrawerItem[] = [];
+  const defaultMenus = [
+    {
+      title: "Profile",
+      path: `${role}/profile`,
+      icon: Person2Icon,
+    },
+  ];
 
   switch (role) {
     case USER_ROLE.SUPER_ADMIN:
@@ -98,7 +106,7 @@ export const GenerateDrawerItems = (role: UserRole): TDrawerItem[] => {
         {
           title: "Payment History",
           path: `${role}/payment-history`,
-          icon: AddCardIcon ,
+          icon: AddCardIcon,
         }
       );
       break;
@@ -107,5 +115,5 @@ export const GenerateDrawerItems = (role: UserRole): TDrawerItem[] => {
       break;
   }
 
-  return [...roleMenus];
+  return [...roleMenus, ...defaultMenus];
 };
