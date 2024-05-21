@@ -58,7 +58,7 @@ const DoctorInformation = ({ data }: any) => {
           <Typography variant="caption" color="secondary">
             Anointment Fee
           </Typography>
-          <Typography>{data?.apointmentFee}</Typography>
+          <Typography>{data?.appointmentFee}</Typography>
         </StyledInformationBox>
         <StyledInformationBox>
           <Typography variant="caption" color="secondary">

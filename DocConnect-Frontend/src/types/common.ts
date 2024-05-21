@@ -5,7 +5,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent";
 export type TMeta = {
   page: number;
   limit: number;
-  total: number;
+  totalCount: number;
 };
 
 export interface TDrawerItem {
@@ -39,5 +39,5 @@ export const Gender = ["MALE", "FEMALE"];
 export type IMeta = {
   page: number;
   limit: number;
-  total: number;
+  totalCount: number;
 };
