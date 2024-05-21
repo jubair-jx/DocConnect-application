@@ -5,6 +5,7 @@ import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
+import KeyIcon from "@mui/icons-material/Key";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import MedicationIcon from "@mui/icons-material/Medication";
@@ -17,6 +18,11 @@ export const GenerateDrawerItems = (role: UserRole): TDrawerItem[] => {
       title: "Profile",
       path: `${role}/profile`,
       icon: Person2Icon,
+    },
+    {
+      title: "Change Password",
+      path: `change-password`,
+      icon: KeyIcon,
     },
   ];
 
