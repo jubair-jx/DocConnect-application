@@ -28,16 +28,17 @@ const LoginPage = () => {
   const [error, setError] = useState("");
 
   const handleLogin = async (values: FieldValues) => {
-    const res = await userLogin(values);
-
-    if (res?.data?.accessToken) {
-      toast.success(res?.message);
-      storeUserInfo({ accessToken: res?.data?.accessToken });
-      router.push("/dashboard");
-    } else {
-      setError(res.message);
-    }
     try {
+      const res = await userLogin(values);
+
+      if (res?.data?.accessToken) {
+        router.push("/dashboard");
+        toast.success(res?.message);
+        storeUserInfo({ accessToken: res?.data?.accessToken });
+        await userLogin(values);
+      } else {
+        setError(res.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }

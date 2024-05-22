@@ -17,6 +17,7 @@ export function middleware(request: NextRequest) {
 
   const accessToken = cookies().get(authKey)?.value;
   //this condition for login and register routes
+  console.log({ accessToken });
   if (!accessToken) {
     if (AuthRoutes.includes(pathname)) {
       return NextResponse.next();
@@ -24,7 +25,11 @@ export function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
-  if (accessToken && commonPrivateRoutes.includes(pathname)) {
+  if (
+    accessToken &&
+    (commonPrivateRoutes.includes(pathname) ||
+      commonPrivateRoutes.some((route) => pathname.startsWith(route)))
+  ) {
     return NextResponse.next();
   }
   let decodedData = null;

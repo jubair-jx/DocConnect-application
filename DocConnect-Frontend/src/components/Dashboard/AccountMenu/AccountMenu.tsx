@@ -1,5 +1,4 @@
-import { authKey } from "@/constant/constant";
-import { removedUserInfo } from "@/utils/local-storage";
+import { logoutUser } from "@/services/actions/logoutUser";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Logout from "@mui/icons-material/Logout";
 import Avatar from "@mui/material/Avatar";
@@ -52,8 +51,7 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    setAnchorEl(null);
-    removedUserInfo(authKey);
+    logoutUser(router);
     router.push("/login");
   };
 
